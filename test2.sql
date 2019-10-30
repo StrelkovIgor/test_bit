@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Окт 30 2019 г., 01:01
+-- Время создания: Окт 30 2019 г., 18:17
 -- Версия сервера: 5.7.22-log
 -- Версия PHP: 7.3.9
 
@@ -40,7 +40,33 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `coin`) VALUES
-(1, 'admin', 'c3284d0f94606de1fd2af172aba15bf3', '2015.00');
+(1, 'admin', 'c3284d0f94606de1fd2af172aba15bf3', '7004.00');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `writeofflog`
+--
+
+CREATE TABLE `writeofflog` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `coin` decimal(10,2) NOT NULL,
+  `balance` decimal(10,2) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `writeofflog`
+--
+
+INSERT INTO `writeofflog` (`id`, `id_user`, `coin`, `balance`, `date`) VALUES
+(15, 8750, '8750.00', '8750.00', '2019-10-30 21:08:40'),
+(16, 8550, '8550.00', '8550.00', '2019-10-30 21:11:03'),
+(17, 8050, '8050.00', '8050.00', '2019-10-30 21:12:17'),
+(18, 7550, '7550.00', '7550.00', '2019-10-30 21:13:52'),
+(19, 1, '-123.00', '7427.00', '2019-10-30 21:15:05'),
+(20, 1, '-300.00', '7304.00', '2019-10-30 21:15:33');
 
 --
 -- Индексы сохранённых таблиц
@@ -54,6 +80,13 @@ ALTER TABLE `users`
   ADD KEY `login` (`login`);
 
 --
+-- Индексы таблицы `writeofflog`
+--
+ALTER TABLE `writeofflog`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -62,6 +95,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT для таблицы `writeofflog`
+--
+ALTER TABLE `writeofflog`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

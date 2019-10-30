@@ -17,6 +17,7 @@ class DB extends Singleton
         'integer' => 1,
         'boolean' => 5,
         'NULL' => 0,
+        'double' => 2,
     ];
 
     public function __construct()
@@ -54,6 +55,11 @@ class DB extends Singleton
         }
         $q->execute();
         return $q->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updatePrepare($query,$data = []){
+        $q = $this->c->prepare($query);
+        $q->execute($data);
     }
 
 }

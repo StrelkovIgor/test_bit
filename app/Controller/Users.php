@@ -11,11 +11,13 @@ namespace Controller;
 use view\Html;
 use Model\Users as u;
 
-class Users extends \Controller
+class Users extends MainController
 {
     public function __construct()
     {
-        if (u::getUser())
+        parent::__construct();
+        $c = S('Rout')->getController();
+        if (u::getUser() && $c[1] != 'loginOut')
         {
             header("Location: /"); exit;
         }
@@ -40,8 +42,7 @@ class Users extends \Controller
 
     public function loginOut(){
         u::loginOut();
-        var_dump('test');
-        //header("Location: /"); exit;
+        header("Location: /"); exit;
     }
 
 }

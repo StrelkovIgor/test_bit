@@ -12,6 +12,7 @@ use view\ViewInterface;
 class Html extends \View implements ViewInterface
 {
     protected $tpl = null;
+    private $section = [];
     public function __construct($nametpl)
     {
         parent::__construct();
@@ -20,11 +21,32 @@ class Html extends \View implements ViewInterface
 
     public function run()
     {
-        ob_start();
         $html = $this->data;
-        include( _App_ . "/tpl/" . $this->tpl .".php");
-        $result = ob_get_clean();
-        ob_end_clean();
+        $tpl = $this;
+        $result = @include( _App_ . "/tpl/" . $this->tpl .".php");
         return $result;
+    }
+
+    public function section()
+    {
+        ob_start();
+    }
+
+    public function endSection($name)
+    {
+        $this->section[$name] =ob_get_clean();
+    }
+
+    public function getSection($name)
+    {
+        return isset($this->section[$name])?$this->section[$name]: null;
+    }
+
+    public function advanced($name)
+    {
+        $html = $this->data;
+        $tpl = $this;
+        $r = @include( _App_ . "/tpl/" . $name .".php");
+        return $r;
     }
 }

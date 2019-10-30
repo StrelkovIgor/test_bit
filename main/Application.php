@@ -7,15 +7,20 @@
  */
 
 use pattern\Singleton;
+use view\Html;
 
 class Application extends Singleton
 {
     public function run()
     {
         S('Config')->set('app');
-
         $tpl = S('Router')->setPath('Routers/Routers')->run();
-        echo $tpl;
+
+        if(!$tpl)
+        {
+           $html = new Html('404');
+           $html->run();
+        }
     }
 
 }

@@ -93,7 +93,7 @@ class Rout extends Singleton
     {
         $class = $this->getLastRouter();
         $url = $this->uri['path']?$this->uri['path']:'/';
-        if(preg_match("|^".$class->url."$|", $url, $match) && in_array($_SERVER['REQUEST_METHOD'],$class->method))
+        if(preg_match("|^".$class->url."/?$|", $url, $match) && in_array($_SERVER['REQUEST_METHOD'],$class->method))
         {
             $class->select = true;
             $class->getMatch = $match;
@@ -121,6 +121,15 @@ class Rout extends Singleton
     public function sortZIndex($a, $b)
     {
         return (int) $a->zIndex >= (int) $b->zIndex;
+    }
+
+    public function getController()
+    {
+        $action = $this->getAction()[0];
+        $path = explode('\\', $action->controller);
+        $element = array_pop($path);
+        list($controller, $action) = explode('@',$element);
+        return [$controller, $action, $path];
     }
 
 }

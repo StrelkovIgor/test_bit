@@ -47,5 +47,15 @@ class Users extends \Model
         }
     }
 
+    public static function writeoff($summ)
+    {
+        $user = self::getUser();
+        if(!$user) throw new \Exception("User not found");
+        self::init()->db->updatePrepare("UPDATE `users` SET `coin` = `coin` - ".$summ." WHERE `id` = ".$user['id']);
+
+        Writeofflog::writeoff($summ, $user);
+        self::update();
+    }
+
 
 }
